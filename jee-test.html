@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JEE Mock Test - EduTest</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        .test-header {
+            background: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .test-info h2 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .test-progress {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .timer {
+            background: #e74c3c;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 20px;
+        }
+
+        .instructions-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .instructions-section h2 {
+            color: #333;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .instructions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .instruction-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .instruction-card h4 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .instruction-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .instruction-card li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .instruction-card li:before {
+            content: "•";
+            color: #667eea;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .start-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block;
+            margin: 2rem auto 0;
+            transition: all 0.3s ease;
+        }
+
+        .start-btn:hover {
+            background: #219a52;
+            transform: translateY(-2px);
+        }
+
+        .test-section {
+            display: none;
+        }
+
+        .test-section.active {
+            display: block;
+        }
+
+        .question-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .question-number {
+            background: #667eea;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .flag-btn {
+            background: #f39c12;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .flag-btn.flagged {
+            background: #e67e22;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .options-container {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .option {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .option:hover {
+            background: #e9ecef;
+            border-color: #667eea;
+        }
+
+        .option.selected {
+            background: #667eea;
+            color: white;
+            border-color: #5a6fd8;
+        }
+
+        .option-label {
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .option.selected .option-label {
+            background: white;
+            color: #667eea;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #5a6fd8;
+        }
+
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .submit-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #c0392b;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .modal h3 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .modal p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .timer {
+                font-size: 1.2rem;
+                padding: 0.8rem 1.5rem;
+            }
+            
+            .question-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="test-header">
+        <div class="header-content">
+            <div class="test-info">
+                <h2>JEE Mock Test</h2>
+                <div class="test-progress">
+                    Question <span id="currentQuestion">1</span> of <span id="totalQuestions">10</span>
+                </div>
+            </div>
+            <div class="timer" id="timer">03:00:00</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Instructions Section -->
+        <div class="instructions-section" id="instructionsSection">
+            <h2>Test Instructions</h2>
+            
+            <div class="instructions-grid">
+                <div class="instruction-card">
+                    <h4>Test Duration</h4>
+                    <ul>
+                        <li>Total time: 3 hours (180 minutes)</li>
+                        <li>Timer will start when you begin the test</li>
+                        <li>Test will auto-submit when time expires</li>
+                    </ul>
+                </div>
+                
+                <div class="instruction-card">
+                    <h4>Marking Scheme</h4>
+                    <ul>
+                        <li>Correct answer: +4 marks</li>
+                        <li>Wrong answer: -1 mark</li>
+                        <li>Unattempted: 0 marks</li>
+                    </ul>
+                </div>
+                
+                <div class="instruction-card">
+                    <h4>Test Format</h4>
+                    <ul>
+                        <li>10 Multiple Choice Questions</li>
+                        <li>Subjects: Physics, Chemistry, Mathematics</li>
+                        <li>Each question has 4 options</li>
+                    </ul>
+                </div>
+                
+                <div class="instruction-card">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li>Use Previous/Next buttons to navigate</li>
+                        <li>You can flag questions for review</li>
+                        <li>Answers are auto-saved</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <button class="start-btn" onclick="startTest()">Start Test</button>
+        </div>
+
+        <!-- Test Section -->
+        <div class="test-section" id="testSection">
+            <div class="question-container">
+                <div class="question-header">
+                    <div class="question-number">Question <span id="questionNum">1</span></div>
+                    <button class="flag-btn" id="flagBtn" onclick="toggleFlag()">🚩 Flag</button>
+                </div>
+                
+                <div class="question-text" id="questionText">
+                    Loading question...
+                </div>
+                
+                <div class="options-container" id="optionsContainer">
+                    <!-- Options will be loaded here -->
+                </div>
+                
+                <div class="navigation-buttons">
+                    <button class="nav-btn" id="prevBtn" onclick="previousQuestion()" disabled>Previous</button>
+                    <button class="submit-btn" onclick="showSubmitModal()">Submit Test</button>
+                    <button class="nav-btn" id="nextBtn" onclick="nextQuestion()">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Submit Confirmation Modal -->
+    <div class="modal" id="submitModal">
+        <div class="modal-content">
+            <h3>Submit Test?</h3>
+            <p>Are you sure you want to submit the test? You won't be able to make changes after submission.</p>
+            <div class="modal-buttons">
+                <button class="nav-btn" onclick="closeSubmitModal()">Cancel</button>
+                <button class="submit-btn" onclick="submitTest()">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        if (localStorage.getItem('userLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        // JEE Test Questions
+        const jeeQuestions = [
+            {
+                question: "A particle moves in a straight line with constant acceleration. If it covers 20m in the first 2 seconds and 60m in the next 4 seconds, what is its initial velocity?",
+                options: ["5 m/s", "10 m/s", "15 m/s", "20 m/s"],
+                correct: 0,
+                subject: "Physics"
+            },
+            {
+                question: "The hybridization of carbon in methane (CH₄) is:",
+                options: ["sp", "sp²", "sp³", "sp³d"],
+                correct: 2,
+                subject: "Chemistry"
+            },
+            {
+                question: "If log₂(x) + log₂(y) = 3, then xy equals:",
+                options: ["6", "8", "9", "12"],
+                correct: 1,
+                subject: "Mathematics"
+            },
+            {
+                question: "The SI unit of electric field intensity is:",
+                options: ["N/C", "C/N", "V/m", "Both A and C"],
+                correct: 3,
+                subject: "Physics"
+            },
+            {
+                question: "Which of the following is an example of a Lewis acid?",
+                options: ["NH₃", "H₂O", "BF₃", "OH⁻"],
+                correct: 2,
+                subject: "Chemistry"
+            },
+            {
+                question: "The derivative of sin(x²) with respect to x is:",
+                options: ["cos(x²)", "2x cos(x²)", "2x sin(x²)", "cos(2x)"],
+                correct: 1,
+                subject: "Mathematics"
+            },
+            {
+                question: "A body of mass 2 kg is moving with velocity 10 m/s. Its kinetic energy is:",
+                options: ["20 J", "50 J", "100 J", "200 J"],
+                correct: 2,
+                subject: "Physics"
+            },
+            {
+                question: "The IUPAC name of CH₃-CH(CH₃)-CH₂-CH₃ is:",
+                options: ["2-methylbutane", "3-methylbutane", "2-methylpentane", "isopentane"],
+                correct: 0,
+                subject: "Chemistry"
+            },
+            {
+                question: "If the roots of equation x² - 5x + 6 = 0 are α and β, then α + β equals:",
+                options: ["5", "6", "-5", "-6"],
+                correct: 0,
+                subject: "Mathematics"
+            },
+            {
+                question: "The frequency of AC mains in India is:",
+                options: ["25 Hz", "50 Hz", "60 Hz", "100 Hz"],
+                correct: 1,
+                subject: "Physics"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let userAnswers = {};
+        let flaggedQuestions = new Set();
+        let testStartTime;
+        let timerInterval;
+        let timeRemaining = 3 * 60 * 60; // 3 hours in seconds
+
+        function startTest() {
+            document.getElementById('instructionsSection').style.display = 'none';
+            document.getElementById('testSection').classList.add('active');
+            
+            testStartTime = new Date();
+            startTimer();
+            loadQuestion();
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                updateTimerDisplay();
+                
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    autoSubmitTest();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const hours = Math.floor(timeRemaining / 3600);
+            const minutes = Math.floor((timeRemaining % 3600) / 60);
+            const seconds = timeRemaining % 60;
+            
+            const display = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById('timer').textContent = display;
+            
+            // Change color when time is running low
+            if (timeRemaining < 300) { // Less than 5 minutes
+                document.getElementById('timer').style.background = '#e74c3c';
+            } else if (timeRemaining < 1800) { // Less than 30 minutes
+                document.getElementById('timer').style.background = '#f39c12';
+            }
+        }
+
+        function loadQuestion() {
+            const question = jeeQuestions[currentQuestionIndex];
+            
+            document.getElementById('questionNum').textContent = currentQuestionIndex + 1;
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            document.getElementById('questionText').textContent = question.question;
+            
+            // Load options
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.onclick = () => selectOption(index);
+                
+                if (userAnswers[currentQuestionIndex] === index) {
+                    optionDiv.classList.add('selected');
+                }
+                
+                optionDiv.innerHTML = `
+                    <div class="option-label">${String.fromCharCode(65 + index)}</div>
+                    <div>${option}</div>
+                `;
+                
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentQuestionIndex === 0;
+            document.getElementById('nextBtn').textContent = currentQuestionIndex === jeeQuestions.length - 1 ? 'Finish' : 'Next';
+            
+            // Update flag button
+            const flagBtn = document.getElementById('flagBtn');
+            if (flaggedQuestions.has(currentQuestionIndex)) {
+                flagBtn.classList.add('flagged');
+                flagBtn.textContent = '🚩 Flagged';
+            } else {
+                flagBtn.classList.remove('flagged');
+                flagBtn.textContent = '🚩 Flag';
+            }
+        }
+
+        function selectOption(optionIndex) {
+            userAnswers[currentQuestionIndex] = optionIndex;
+            
+            // Update UI
+            document.querySelectorAll('.option').forEach((option, index) => {
+                if (index === optionIndex) {
+                    option.classList.add('selected');
+                } else {
+                    option.classList.remove('selected');
+                }
+            });
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < jeeQuestions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            }
+        }
+
+        function toggleFlag() {
+            if (flaggedQuestions.has(currentQuestionIndex)) {
+                flaggedQuestions.delete(currentQuestionIndex);
+            } else {
+                flaggedQuestions.add(currentQuestionIndex);
+            }
+            loadQuestion();
+        }
+
+        function showSubmitModal() {
+            document.getElementById('submitModal').style.display = 'block';
+        }
+
+        function closeSubmitModal() {
+            document.getElementById('submitModal').style.display = 'none';
+        }
+
+        function submitTest() {
+            clearInterval(timerInterval);
+            
+            // Calculate results
+            let correct = 0;
+            let wrong = 0;
+            let unattempted = 0;
+            
+            jeeQuestions.forEach((question, index) => {
+                if (userAnswers[index] !== undefined) {
+                    if (userAnswers[index] === question.correct) {
+                        correct++;
+                    } else {
+                        wrong++;
+                    }
+                } else {
+                    unattempted++;
+                }
+            });
+            
+            const score = (correct * 4) - (wrong * 1);
+            const maxScore = jeeQuestions.length * 4;
+            const percentage = Math.round((score / maxScore) * 100);
+            
+            const testEndTime = new Date();
+            const timeTaken = Math.round((testEndTime - testStartTime) / 1000 / 60); // in minutes
+            
+            // Store results
+            const result = {
+                testType: 'jee',
+                date: testEndTime.toISOString(),
+                score: score,
+                maxScore: maxScore,
+                percentage: percentage,
+                correct: correct,
+                wrong: wrong,
+                unattempted: unattempted,
+                totalQuestions: jeeQuestions.length,
+                timeTaken: `${Math.floor(timeTaken / 60)}h ${timeTaken % 60}m`,
+                answers: userAnswers,
+                questions: jeeQuestions
+            };
+            
+            // Save to localStorage
+            const existingResults = JSON.parse(localStorage.getItem('testResults') || '[]');
+            existingResults.push(result);
+            localStorage.setItem('testResults', JSON.stringify(existingResults));
+            localStorage.setItem('currentTestResult', JSON.stringify(result));
+            
+            // Redirect to results
+            window.location.href = 'results.html';
+        }
+
+        function autoSubmitTest() {
+            alert('Time is up! Test will be submitted automatically.');
+            submitTest();
+        }
+
+        // Prevent page refresh/back button during test
+        window.addEventListener('beforeunload', function(e) {
+            if (document.getElementById('testSection').classList.contains('active')) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+
+        // Initialize
+        document.getElementById('totalQuestions').textContent = jeeQuestions.length;
+    </script>
+</body>
+</html>

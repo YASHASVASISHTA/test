@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEET Mock Test - EduTest</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        .test-header {
+            background: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .test-info h2 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .test-progress {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .timer {
+            background: #e74c3c;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 20px;
+        }
+
+        .instructions-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .instructions-section h2 {
+            color: #333;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .instructions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .instruction-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #27ae60;
+        }
+
+        .instruction-card h4 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .instruction-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .instruction-card li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .instruction-card li:before {
+            content: "•";
+            color: #27ae60;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .start-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: block;
+            margin: 2rem auto 0;
+            transition: all 0.3s ease;
+        }
+
+        .start-btn:hover {
+            background: #219a52;
+            transform: translateY(-2px);
+        }
+
+        .test-section {
+            display: none;
+        }
+
+        .test-section.active {
+            display: block;
+        }
+
+        .question-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .question-number {
+            background: #27ae60;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .flag-btn {
+            background: #f39c12;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .flag-btn.flagged {
+            background: #e67e22;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .options-container {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .option {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .option:hover {
+            background: #e9ecef;
+            border-color: #27ae60;
+        }
+
+        .option.selected {
+            background: #27ae60;
+            color: white;
+            border-color: #219a52;
+        }
+
+        .option-label {
+            background: #27ae60;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .option.selected .option-label {
+            background: white;
+            color: #27ae60;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #219a52;
+        }
+
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .submit-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #c0392b;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .modal h3 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .modal p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .timer {
+                font-size: 1.2rem;
+                padding: 0.8rem 1.5rem;
+            }
+            
+            .question-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="test-header">
+        <div class="header-content">
+            <div class="test-info">
+                <h2>NEET Mock Test</h2>
+                <div class="test-progress">
+                    Question <span id="currentQuestion">1</span> of <span id="totalQuestions">10</span>
+                </div>
+            </div>
+            <div class="timer" id="timer">03:00:00</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Instructions Section -->
+        <div class="instructions-section" id="instructionsSection">
+            <h2>Test Instructions</h2>
+            
+            <div class="instructions-grid">
+                <div class="instruction-card">
+                    <h4>Test Duration</h4>
+                    <ul>
+                        <li>Total time: 3 hours (180 minutes)</li>
+                        <li>Timer will start when you begin the test</li>
+                        <li>Test will auto-submit when time expires</li>
+                    </ul>
+                </div>
+                
+                <div class="instruction-card">
+                    <h4>Marking Scheme</h4>
+                    <ul>
+                        <li>Correct answer: +4 marks</li>
+                        <li>Wrong answer: -1 mark</li>
+                        <li>Unattempted: 0 marks</li>
+                    </ul>
+                </div>
+                
+                <div class="instruction-card">
+                    <h4>Test Format</h4>
+                    <ul>
+                        <li>10 Multiple Choice Questions</li>
+                        <li>Subjects: Physics, Chemistry, Biology</li>
+                        <li>Each question has 4 options</li>
+                    </ul>
+                </div>
+                
+                <div class="instruction-card">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li>Use Previous/Next buttons to navigate</li>
+                        <li>You can flag questions for review</li>
+                        <li>Answers are auto-saved</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <button class="start-btn" onclick="startTest()">Start Test</button>
+        </div>
+
+        <!-- Test Section -->
+        <div class="test-section" id="testSection">
+            <div class="question-container">
+                <div class="question-header">
+                    <div class="question-number">Question <span id="questionNum">1</span></div>
+                    <button class="flag-btn" id="flagBtn" onclick="toggleFlag()">🚩 Flag</button>
+                </div>
+                
+                <div class="question-text" id="questionText">
+                    Loading question...
+                </div>
+                
+                <div class="options-container" id="optionsContainer">
+                    <!-- Options will be loaded here -->
+                </div>
+                
+                <div class="navigation-buttons">
+                    <button class="nav-btn" id="prevBtn" onclick="previousQuestion()" disabled>Previous</button>
+                    <button class="submit-btn" onclick="showSubmitModal()">Submit Test</button>
+                    <button class="nav-btn" id="nextBtn" onclick="nextQuestion()">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Submit Confirmation Modal -->
+    <div class="modal" id="submitModal">
+        <div class="modal-content">
+            <h3>Submit Test?</h3>
+            <p>Are you sure you want to submit the test? You won't be able to make changes after submission.</p>
+            <div class="modal-buttons">
+                <button class="nav-btn" onclick="closeSubmitModal()">Cancel</button>
+                <button class="submit-btn" onclick="submitTest()">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        if (localStorage.getItem('userLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        // NEET Test Questions
+        const neetQuestions = [
+            {
+                question: "Which of the following is the powerhouse of the cell?",
+                options: ["Nucleus", "Mitochondria", "Ribosome", "Endoplasmic Reticulum"],
+                correct: 1,
+                subject: "Biology"
+            },
+            {
+                question: "The pH of human blood is approximately:",
+                options: ["6.4", "7.0", "7.4", "8.0"],
+                correct: 2,
+                subject: "Biology"
+            },
+            {
+                question: "Which gas is produced during photosynthesis?",
+                options: ["Carbon dioxide", "Oxygen", "Nitrogen", "Hydrogen"],
+                correct: 1,
+                subject: "Biology"
+            },
+            {
+                question: "The molecular formula of glucose is:",
+                options: ["C₆H₁₂O₆", "C₆H₁₀O₅", "C₅H₁₀O₅", "C₆H₁₄O₆"],
+                correct: 0,
+                subject: "Chemistry"
+            },
+            {
+                question: "Which of the following is a noble gas?",
+                options: ["Oxygen", "Nitrogen", "Argon", "Hydrogen"],
+                correct: 2,
+                subject: "Chemistry"
+            },
+            {
+                question: "The atomic number of carbon is:",
+                options: ["4", "6", "8", "12"],
+                correct: 1,
+                subject: "Chemistry"
+            },
+            {
+                question: "The acceleration due to gravity on Earth is approximately:",
+                options: ["9.8 m/s²", "10.8 m/s²", "8.9 m/s²", "11.2 m/s²"],
+                correct: 0,
+                subject: "Physics"
+            },
+            {
+                question: "Which of the following is a vector quantity?",
+                options: ["Speed", "Distance", "Velocity", "Time"],
+                correct: 2,
+                subject: "Physics"
+            },
+            {
+                question: "The unit of electric current is:",
+                options: ["Volt", "Ampere", "Ohm", "Watt"],
+                correct: 1,
+                subject: "Physics"
+            },
+            {
+                question: "DNA replication occurs during which phase of cell cycle?",
+                options: ["G1 phase", "S phase", "G2 phase", "M phase"],
+                correct: 1,
+                subject: "Biology"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let userAnswers = {};
+        let flaggedQuestions = new Set();
+        let testStartTime;
+        let timerInterval;
+        let timeRemaining = 3 * 60 * 60; // 3 hours in seconds
+
+        function startTest() {
+            document.getElementById('instructionsSection').style.display = 'none';
+            document.getElementById('testSection').classList.add('active');
+            
+            testStartTime = new Date();
+            startTimer();
+            loadQuestion();
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                updateTimerDisplay();
+                
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    autoSubmitTest();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const hours = Math.floor(timeRemaining / 3600);
+            const minutes = Math.floor((timeRemaining % 3600) / 60);
+            const seconds = timeRemaining % 60;
+            
+            const display = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById('timer').textContent = display;
+            
+            // Change color when time is running low
+            if (timeRemaining < 300) { // Less than 5 minutes
+                document.getElementById('timer').style.background = '#e74c3c';
+            } else if (timeRemaining < 1800) { // Less than 30 minutes
+                document.getElementById('timer').style.background = '#f39c12';
+            }
+        }
+
+        function loadQuestion() {
+            const question = neetQuestions[currentQuestionIndex];
+            
+            document.getElementById('questionNum').textContent = currentQuestionIndex + 1;
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            document.getElementById('questionText').textContent = question.question;
+            
+            // Load options
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.onclick = () => selectOption(index);
+                
+                if (userAnswers[currentQuestionIndex] === index) {
+                    optionDiv.classList.add('selected');
+                }
+                
+                optionDiv.innerHTML = `
+                    <div class="option-label">${String.fromCharCode(65 + index)}</div>
+                    <div>${option}</div>
+                `;
+                
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentQuestionIndex === 0;
+            document.getElementById('nextBtn').textContent = currentQuestionIndex === neetQuestions.length - 1 ? 'Finish' : 'Next';
+            
+            // Update flag button
+            const flagBtn = document.getElementById('flagBtn');
+            if (flaggedQuestions.has(currentQuestionIndex)) {
+                flagBtn.classList.add('flagged');
+                flagBtn.textContent = '🚩 Flagged';
+            } else {
+                flagBtn.classList.remove('flagged');
+                flagBtn.textContent = '🚩 Flag';
+            }
+        }
+
+        function selectOption(optionIndex) {
+            userAnswers[currentQuestionIndex] = optionIndex;
+            
+            // Update UI
+            document.querySelectorAll('.option').forEach((option, index) => {
+                if (index === optionIndex) {
+                    option.classList.add('selected');
+                } else {
+                    option.classList.remove('selected');
+                }
+            });
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < neetQuestions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            }
+        }
+
+        function toggleFlag() {
+            if (flaggedQuestions.has(currentQuestionIndex)) {
+                flaggedQuestions.delete(currentQuestionIndex);
+            } else {
+                flaggedQuestions.add(currentQuestionIndex);
+            }
+            loadQuestion();
+        }
+
+        function showSubmitModal() {
+            document.getElementById('submitModal').style.display = 'block';
+        }
+
+        function closeSubmitModal() {
+            document.getElementById('submitModal').style.display = 'none';
+        }
+
+        function submitTest() {
+            clearInterval(timerInterval);
+            
+            // Calculate results
+            let correct = 0;
+            let wrong = 0;
+            let unattempted = 0;
+            
+            neetQuestions.forEach((question, index) => {
+                if (userAnswers[index] !== undefined) {
+                    if (userAnswers[index] === question.correct) {
+                        correct++;
+                    } else {
+                        wrong++;
+                    }
+                } else {
+                    unattempted++;
+                }
+            });
+            
+            const score = (correct * 4) - (wrong * 1);
+            const maxScore = neetQuestions.length * 4;
+            const percentage = Math.round((score / maxScore) * 100);
+            
+            const testEndTime = new Date();
+            const timeTaken = Math.round((testEndTime - testStartTime) / 1000 / 60); // in minutes
+            
+            // Store results
+            const result = {
+                testType: 'neet',
+                date: testEndTime.toISOString(),
+                score: score,
+                maxScore: maxScore,
+                percentage: percentage,
+                correct: correct,
+                wrong: wrong,
+                unattempted: unattempted,
+                totalQuestions: neetQuestions.length,
+                timeTaken: `${Math.floor(timeTaken / 60)}h ${timeTaken % 60}m`,
+                answers: userAnswers,
+                questions: neetQuestions
+            };
+            
+            // Save to localStorage
+            const existingResults = JSON.parse(localStorage.getItem('testResults') || '[]');
+            existingResults.push(result);
+            localStorage.setItem('testResults', JSON.stringify(existingResults));
+            localStorage.setItem('currentTestResult', JSON.stringify(result));
+            
+            // Redirect to results
+            window.location.href = 'results.html';
+        }
+
+        function autoSubmitTest() {
+            alert('Time is up! Test will be submitted automatically.');
+            submitTest();
+        }
+
+        // Prevent page refresh/back button during test
+        window.addEventListener('beforeunload', function(e) {
+            if (document.getElementById('testSection').classList.contains('active')) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+
+        // Initialize
+        document.getElementById('totalQuestions').textContent = neetQuestions.length;
+    </script>
+</body>
+</html>
