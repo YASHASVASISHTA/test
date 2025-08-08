@@ -254,7 +254,7 @@
             </div>
             <div class="user-info">
                 <span id="userName">Loading...</span>
-                <button class="logout-btn" onclick="logout()">Logout</button>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
             </div>
         </nav>
     </header>
@@ -298,15 +298,48 @@
         </section>
     </div>
 
-    <script>
-        // Check if user is logged in
-        if (localStorage.getItem('userLoggedIn') !== 'true') {
-            window.location.href = 'login.html';
-        }
+    <!-- Import Firebase modules -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-analytics.js";
+        import { 
+            getAuth, 
+            signOut, 
+            onAuthStateChanged 
+        } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-auth.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBQsFfJNprW2WTAXxH6gqGlO-LLAQ91EEQ",
+            authDomain: "test-1c44b.firebaseapp.com",
+            projectId: "test-1c44b",
+            storageBucket: "test-1c44b.firebasestorage.app",
+            messagingSenderId: "528120704700",
+            appId: "1:528120704700:web:9bebd83b46a09eff81aab9",
+            measurementId: "G-693L5P3DG0"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth(app);
+
+        // Check auth state
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in
+                loadUserData(user);
+                loadTestHistory();
+            } else {
+                // User is signed out
+                window.location.href = 'login.html';
+            }
+        });
 
         // Load user data
-        function loadUserData() {
-            const userName = localStorage.getItem('userName') || 'Student';
+        function loadUserData(user) {
+            const userName = user.displayName || user.email || 'Student';
             document.getElementById('userName').textContent = userName;
             document.getElementById('welcomeMessage').textContent = `Welcome back, ${userName}!`;
         }
@@ -348,18 +381,18 @@
         }
 
         // Logout function
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                localStorage.removeItem('userLoggedIn');
-                localStorage.removeItem('userName');
-                localStorage.removeItem('userEmail');
-                window.location.href = 'index.html';
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                // Clear local storage if needed
+                localStorage.removeItem('testResults');
+                // Redirect to login page
+                window.location.href = 'login.html';
+            } catch (error) {
+                console.error('Logout error:', error);
+                alert('Error signing out. Please try again.');
             }
-        }
-
-        // Initialize page
-        loadUserData();
-        loadTestHistory();
+        });
     </script>
 </body>
 </html>
