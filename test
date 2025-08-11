@@ -422,47 +422,107 @@
         }
 
         // Load test questions
-        async function loadQuestions() {
+       async function loadQuestions() {
+    try {
+        // Get the test ID from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const testId = urlParams.get('test');
+        
+        if (!testId) {
+            const errorMsg = "No test specified in the URL. Please select a test from the test selection page.";
+            console.error("Error: Missing test ID in URL parameters");
+            showError(errorMsg);
+            return;
+        }
+        
+        // Map test IDs to JSON filenames
+        const testJsonMap = {
+            // JEE Physics
+            'jp1': 'jee-physics-mechanics1.json',
+            'jp2': 'jee-physics-mechanics2.json',
+            'jp3': 'jee-physics-thermo.json',
+            // Add other test IDs as needed
+            'jm1': 'mockjee1.json',
+            'nm1': 'mockneet1.json'
+        };
+        
+        const jsonFile = testJsonMap[testId];
+        if (!jsonFile) {
+            const errorMsg = `The test you requested (ID: ${testId}) is not available.`;
+            console.error(`Error: Test ID "${testId}" not found in configuration`);
+            showError(errorMsg);
+            return;
+        }
+        
+        // Try to load from multiple possible locations
+        const pathsToTry = [
+            jsonFile,
+            `./${jsonFile}`,
+            `../${jsonFile}`,
+            `tests/${jsonFile}`,
+            `./tests/${jsonFile}`
+        ];
+        
+        let response;
+        let lastError;
+        
+        for (const path of pathsToTry) {
             try {
-                // Try to load from multiple possible locations
-                const pathsToTry = [
-                    'test.json',
-                    './test.json',
-                    '../test.json',
-                    'tests/test.json',
-                    './tests/test.json'
-                ];
-                
-                let response;
-                for (const path of pathsToTry) {
-                    try {
-                        response = await fetch(path);
-                        if (response.ok) break;
-                    } catch (e) {
-                        console.log(`Failed to load from ${path}`);
-                    }
+                console.log(`Attempting to load test from: ${path}`);
+                response = await fetch(path);
+                if (response.ok) {
+                    console.log(`Successfully loaded test from: ${path}`);
+                    break;
                 }
-                
-                if (!response || !response.ok) {
-                    throw new Error('Could not find test.json in any standard location');
-                }
-                
-                questions = await response.json();
-                
-                // Validate questions
-                if (!Array.isArray(questions)) {
-                    throw new Error('Test file must contain an array of questions');
-                }
-                if (questions.length === 0) {
-                    throw new Error('Test file contains no questions');
-                }
-                
-                initializeTest();
-            } catch (error) {
-                console.error('Error loading questions:', error);
-                showError(error.message || 'Failed to load test questions');
+                lastError = `HTTP ${response.status} - ${response.statusText}`;
+            } catch (e) {
+                lastError = e.message;
+                console.log(`Failed to load from ${path}:`, e);
             }
         }
+        
+        if (!response || !response.ok) {
+            const errorMsg = `Could not load the test file (${jsonFile}). Please try again later.`;
+            console.error(`Error loading test file: ${lastError || 'Unknown error'}`);
+            console.error(`Attempted paths:`, pathsToTry);
+            showError(errorMsg);
+            return;
+        }
+        
+        try {
+            questions = await response.json();
+            
+            // Validate questions
+            if (!Array.isArray(questions)) {
+                const errorMsg = "The test file is not properly formatted.";
+                console.error("Error: Test file must contain an array of questions");
+                console.error("Received data:", questions);
+                showError(errorMsg);
+                return;
+            }
+            
+            if (questions.length === 0) {
+                const errorMsg = "The test file contains no questions.";
+                console.error("Error: Test file is empty");
+                showError(errorMsg);
+                return;
+            }
+            
+            console.log(`Successfully loaded ${questions.length} questions`);
+            initializeTest();
+            
+        } catch (parseError) {
+            const errorMsg = "Failed to process the test questions. The file may be corrupted.";
+            console.error("Error parsing test JSON:", parseError);
+            showError(errorMsg);
+        }
+        
+    } catch (unexpectedError) {
+        const errorMsg = "An unexpected error occurred while loading the test.";
+        console.error("Unexpected error in loadQuestions:", unexpectedError);
+        showError(errorMsg);
+    }
+}
 
         function initializeTest() {
             // Create question navigation buttons
