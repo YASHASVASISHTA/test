@@ -426,7 +426,7 @@
                 title: "JEE Physics Chapterwise Tests",
                 description: "Practice individual chapters for JEE Physics with detailed solutions",
                 tests: [
-                    { id: 'jp1', name: "Mechanics - 1", chapters: "Units, Dimensions, Motion", questions: 30, time: "1 hour", link: "jee-test.html" },
+                    { id: 'jp1', name: "Mechanics - 1", chapters: "Units, Dimensions, Motion", questions: 30, time: "1 hour", link: "jee-physics-mechanics1.html" },
                     { id: 'jp2', name: "Mechanics - 2", chapters: "Laws of Motion, Work Energy", questions: 35, time: "1.5 hours", link: "jee-physics-mechanics2.html" },
                     { id: 'jp3', name: "Thermodynamics", chapters: "Heat, Thermodynamics Laws", questions: 25, time: "45 mins", link: "jee-physics-thermo.html" },
                     { id: 'jp4', name: "Electrostatics", chapters: "Coulomb's Law, Potential", questions: 30, time: "1 hour", link: "jee-physics-electro.html" },
@@ -615,24 +615,24 @@
             const container = document.getElementById('testsContainer');
             container.innerHTML = '';
             
-            data.tests.forEach(test => {
-                const card = document.createElement('div');
-                card.className = 'test-card';
-                card.innerHTML = `
-                    <div class="test-image">${category.includes('jee') ? 'JEE' : category.includes('neet') ? 'NEET' : test.name.substring(0, 2)}</div>
-                    <div class="test-content">
-                        <span class="test-badge">${category.includes('past') ? 'PYQ' : category.includes('chapter') ? 'Chapter' : 'Mock Test'}</span>
-                        <h3>${test.name}</h3>
-                        <p>${test.chapters}</p>
-                        <div class="test-meta">
-                            <span>⏱️ ${test.time}</span>
-                            <span>❓ ${test.questions} questions</span>
-                        </div>
-                        <a href="${test.link}" class="start-btn">Start Test</a>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
+           data.tests.forEach(test => {
+    const card = document.createElement('div');
+    card.className = 'test-card';
+    card.innerHTML = `
+        <div class="test-image">${category.includes('jee') ? 'JEE' : category.includes('neet') ? 'NEET' : test.name.substring(0, 2)}</div>
+        <div class="test-content">
+            <span class="test-badge">${category.includes('past') ? 'PYQ' : category.includes('chapter') ? 'Chapter' : 'Mock Test'}</span>
+            <h3>${test.name}</h3>
+            <p>${test.chapters}</p>
+            <div class="test-meta">
+                <span>⏱️ ${test.time}</span>
+                <span>❓ ${test.questions} questions</span>
+            </div>
+            <a href="test.html?test=${test.id}" class="start-btn">Start Test</a>
+        </div>
+    `;
+    container.appendChild(card);
+});
             
             // Update active submenu item
             document.querySelectorAll('.submenu-item a').forEach(item => {
