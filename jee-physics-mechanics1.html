@@ -719,7 +719,7 @@
         // Beforeunload event (for page refresh/close)
         window.addEventListener('beforeunload', (e) => {
             if (testStarted) {
-                e.preventDefault();
+           
                 e.returnValue = 'Are you sure you want to leave? Your test will be submitted.';
                 endTestDueToViolation("Test ended because you left the page");
             }
