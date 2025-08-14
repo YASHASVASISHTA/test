@@ -541,7 +541,7 @@
             <div class="question-container">
                 <div class="question-header">
                     <div class="question-number">Question <span id="currentQNum">1</span></div>
-                    <button class="flag-btn" id="flagBtn" onclick="toggleFlag()">🚩 Flag</button>
+                    <button class="flag-btn" id="flagBtn" onclick="toggleFlag()">🚩 Preview</button>
                 </div>
                 
                 <div class="question-text" id="questionText">
@@ -905,7 +905,7 @@
                 flagBtn.textContent = '🚩 Flagged';
             } else {
                 flagBtn.classList.remove('flagged');
-                flagBtn.textContent = '🚩 Flag';
+                flagBtn.textContent = '🚩 Preview';
             }
         }
 
