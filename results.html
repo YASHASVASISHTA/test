@@ -341,36 +341,33 @@
         // Load results from localStorage
  
     // Load results from localStorage
-    document.addEventListener('DOMContentLoaded', function() {
-        const result = JSON.parse(localStorage.getItem('testResult'));
-        
-        if (!result) {
-            alert('No test results found. Redirecting to home page.');
-            window.location.href = 'index.html';
-            return;
-        }
-        
-        // Remove results from localStorage immediately
-        localStorage.removeItem('testResult');
-        
-        // Display results
-        displayResults(result);
-        
-        // Prevent back navigation
-        history.pushState(null, null, location.href);
-        window.onpopstate = function() {
-            history.go(1);
-        };
-        
-        // Optional: Warn user if they try to leave
-        window.addEventListener('beforeunload', function(e) {
-            // You can customize this message
-            e.preventDefault();
-            e.returnValue = '';
-        });
+ document.addEventListener('DOMContentLoaded', function() {
+    const result = JSON.parse(localStorage.getItem('testResult'));
+    
+    if (!result) {
+        alert('No test results found. Redirecting to home page.');
+        window.location.href = 'index.html';
+        return;
+    }
+    
+    // Remove results from localStorage immediately
+    localStorage.removeItem('testResult'));
+    
+    // Display results
+    displayResults(result);
+    
+    // Completely prevent back navigation
+    history.pushState(null, null, null);
+    window.addEventListener('popstate', function() {
+        history.pushState(null, null, null);
     });
-
-    // Rest of your existing functions...
+    
+    // Also prevent the Back to Home button from working with the back button
+    document.querySelector('.btn-secondary').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.href = 'index.html';
+    });
+});
 
 
         function displayResults(result) {
