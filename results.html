@@ -469,8 +469,8 @@
 
         // Load test results
         function loadResults() {
-            const result = JSON.parse(localStorage.getItem('currentTestResult'));
-            
+            const result = JSON.parse(localStorage.getItem('result'));
+        
             if (!result) {
                 alert('No test results found. Redirecting to dashboard.');
                 window.location.href = 'home.html';
