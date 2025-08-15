@@ -621,24 +621,189 @@
         });
 
         // Test data
-        const testData = {
-            // Chapterwise Tests
-            'jee-physics-chapters': {
-                title: "JEE Physics Chapterwise Tests",
-                description: "Practice individual chapters for JEE Physics with detailed solutions",
-                tests: [
-                    { id: 'jp1', name: "Mechanics - 1", chapters: "Units, Dimensions, Motion", questions: 30, time: "1 hour", link: "jee-physics-mechanics1.html" },
-                    { id: 'jp2', name: "Mechanics - 2", chapters: "Laws of Motion, Work Energy", questions: 35, time: "1.5 hours", link: "#" },
-                    { id: 'jp3', name: "Thermodynamics", chapters: "Heat, Thermodynamics Laws", questions: 25, time: "45 mins", link: "#" },
-                    { id: 'jp4', name: "Electrostatics", chapters: "Coulomb's Law, Potential", questions: 30, time: "1 hour", link: "#" },
-                    { id: 'jp5', name: "Current Electricity", chapters: "Ohm's Law, Circuits", questions: 30, time: "1 hour", link: "#" },
-                    { id: 'jp6', name: "Magnetism", chapters: "Magnetic Fields, EMI", questions: 25, time: "45 mins", link: "#" },
-                    { id: 'jp7', name: "Optics", chapters: "Ray, Wave Optics", questions: 30, time: "1 hour", link: "#" },
-                    { id: 'jp8', name: "Modern Physics", chapters: "Atoms, Nuclei, Semiconductors", questions: 35, time: "1.5 hours", link: "#" }
-                ]
-            },
-            // ... (rest of your test data remains the same)
-        };
+          const testData = {
+    // Chapterwise Tests
+    'jee-physics-chapters': {
+        title: "JEE Physics Chapterwise Tests",
+        description: "Practice individual chapters for JEE Physics with detailed solutions",
+        tests: [
+            { id: 'jp1', name: "Mechanics - 1", chapters: "Units, Dimensions, Motion", questions: 30, time: "1 hour", link: "jee-physics-mechanics1.html" },
+            { id: 'jp2', name: "Mechanics - 2", chapters: "Laws of Motion, Work Energy", questions: 35, time: "1.5 hours", link: "#" },
+            { id: 'jp3', name: "Thermodynamics", chapters: "Heat, Thermodynamics Laws", questions: 25, time: "45 mins", link: "#" },
+            { id: 'jp4', name: "Electrostatics", chapters: "Coulomb's Law, Potential", questions: 30, time: "1 hour", link: "#" },
+            { id: 'jp5', name: "Current Electricity", chapters: "Ohm's Law, Circuits", questions: 30, time: "1 hour", link: "#" },
+            { id: 'jp6', name: "Magnetism", chapters: "Magnetic Fields, EMI", questions: 25, time: "45 mins", link: "#" },
+            { id: 'jp7', name: "Optics", chapters: "Ray, Wave Optics", questions: 30, time: "1 hour", link: "#" },
+            { id: 'jp8', name: "Modern Physics", chapters: "Atoms, Nuclei, Semiconductors", questions: 35, time: "1.5 hours", link: "#" }
+        ]
+    },
+    'jee-chemistry-chapters': {
+        title: "JEE Chemistry Chapterwise Tests",
+        description: "Practice individual chapters for JEE Chemistry with detailed solutions",
+        tests: [
+            { id: 'jc1', name: "Physical Chem - 1", chapters: "Mole Concept, Atomic Structure", questions: 30, time: "1 hour", link: "#" },
+            { id: 'jc2', name: "Physical Chem - 2", chapters: "Thermodynamics, Equilibrium", questions: 35, time: "1.5 hours", link: "#" },
+            { id: 'jc3', name: "Inorganic Chem - 1", chapters: "Periodic Table, Chemical Bonding", questions: 30, time: "1 hour", link: "#" },
+            { id: 'jc4', name: "Inorganic Chem - 2", chapters: "Coordination Compounds", questions: 25, time: "45 mins", link: "#" },
+            { id: 'jc5', name: "Organic Chem - 1", chapters: "Basics, Hydrocarbons", questions: 30, time: "1 hour", link: "#" },
+            { id: 'jc6', name: "Organic Chem - 2", chapters: "Oxygen, Nitrogen Compounds", questions: 35, time: "1.5 hours", link: "#" },
+            { id: 'jc7', name: "Organic Chem - 3", chapters: "Polymers, Biomolecules", questions: 25, time: "45 mins", link: "#" }
+        ]
+    },
+    'neet-physics-chapters': {
+        title: "NEET Physics Chapterwise Tests",
+        description: "Practice individual chapters for NEET Physics with NCERT focus",
+        tests: [
+            { id: 'np1', name: "Mechanics", chapters: "Motion, Laws, Work Energy", questions: 40, time: "1.5 hours", link: "#" },
+            { id: 'np2', name: "Thermodynamics", chapters: "Heat, Thermodynamics Laws", questions: 30, time: "1 hour", link: "#" },
+            { id: 'np3', name: "Electrostatics", chapters: "Electric Charges, Potential", questions: 35, time: "1 hour", link: "#" },
+            { id: 'np4', name: "Current Electricity", chapters: "Ohm's Law, Circuits", questions: 30, time: "1 hour", link: "#" },
+            { id: 'np5', name: "Magnetism", chapters: "Magnetic Effects, EMI", questions: 30, time: "1 hour", link: "#" },
+            { id: 'np6', name: "Optics", chapters: "Ray, Wave Optics", questions: 35, time: "1 hour", link: "#" },
+            { id: 'np7', name: "Modern Physics", chapters: "Atoms, Nuclei, Semiconductors", questions: 40, time: "1.5 hours", link: "#" }
+        ]
+    },
+    'neet-biology-chapters': {
+        title: "NEET Biology Chapterwise Tests",
+        description: "Practice individual chapters for NEET Biology with NCERT focus",
+        tests: [
+            { id: 'nb1', name: "Diversity in Living World", chapters: "Classification, Plant/Animal Kingdoms", questions: 50, time: "1.5 hours", link: "#" },
+            { id: 'nb2', name: "Structural Organization", chapters: "Morphology, Anatomy", questions: 40, time: "1 hour", link: "#" },
+            { id: 'nb3', name: "Cell Biology", chapters: "Cell Structure, Division", questions: 45, time: "1.5 hours", link: "#" },
+            { id: 'nb4', name: "Plant Physiology", chapters: "Photosynthesis, Respiration", questions: 50, time: "1.5 hours", link: "#" },
+            { id: 'nb5', name: "Human Physiology", chapters: "Digestion, Circulation, Neural", questions: 60, time: "2 hours", link: "#" },
+            { id: 'nb6', name: "Reproduction", chapters: "Plant, Human Reproduction", questions: 50, time: "1.5 hours", link: "#" },
+            { id: 'nb7', name: "Genetics", chapters: "Mendelian, Molecular Genetics", questions: 55, time: "2 hours", link: "#" },
+            { id: 'nb8', name: "Biotechnology", chapters: "Principles, Applications", questions: 40, time: "1 hour", link: "#" },
+            { id: 'nb9', name: "Ecology", chapters: "Organisms, Ecosystems", questions: 45, time: "1.5 hours", link: "#" }
+        ]
+    },
+    
+    // Main Exams
+    'jee-mains': {
+        title: "JEE Mains Mock Tests",
+        description: "Complete JEE Mains mock tests with latest pattern and syllabus",
+        tests: [
+            { id: 'jm1', name: "JEE Mains Mock Test 1", chapters: "Full Syllabus", questions: 90, time: "3 hours", link: "#" },
+            { id: 'jm2', name: "JEE Mains Mock Test 2", chapters: "Full Syllabus", questions: 90, time: "3 hours", link: "#" },
+            { id: 'jm3', name: "JEE Mains Mock Test 3", chapters: "Full Syllabus", questions: 90, time: "3 hours", link: "#" },
+            { id: 'jm4', name: "JEE Mains Physics Focus", chapters: "Physics Intensive", questions: 30, time: "1 hour", link: "#" },
+            { id: 'jm5', name: "JEE Mains Chemistry Focus", chapters: "Chemistry Intensive", questions: 30, time: "1 hour", link: "#" },
+            { id: 'jm6', name: "JEE Mains Math Focus", chapters: "Mathematics Intensive", questions: 30, time: "1 hour", link: "#" }
+        ]
+    },
+    'jee-advanced': {
+        title: "JEE Advanced Mock Tests",
+        description: "Complete JEE Advanced mock tests with advanced level questions",
+        tests: [
+            { id: 'ja1', name: "JEE Advanced Mock Test 1", chapters: "Full Syllabus", questions: 54, time: "3 hours", link: "#" },
+            { id: 'ja2', name: "JEE Advanced Mock Test 2", chapters: "Full Syllabus", questions: 54, time: "3 hours", link: "#" },
+            { id: 'ja3', name: "JEE Advanced Physics", chapters: "Physics Only", questions: 18, time: "1 hour", link: "#" },
+            { id: 'ja4', name: "JEE Advanced Chemistry", chapters: "Chemistry Only", questions: 18, time: "1 hour", link: "#" },
+            { id: 'ja5', name: "JEE Advanced Math", chapters: "Math Only", questions: 18, time: "1 hour", link: "#" }
+        ]
+    },
+    'neet': {
+        title: "NEET Mock Tests",
+        description: "Complete NEET mock tests with latest pattern and syllabus",
+        tests: [
+            { id: 'nm1', name: "NEET Mock Test 1", chapters: "Full Syllabus", questions: 180, time: "3 hours", link: "#" },
+            { id: 'nm2', name: "NEET Mock Test 2", chapters: "Full Syllabus", questions: 180, time: "3 hours", link: "#" },
+            { id: 'nm3', name: "NEET Mock Test 3", chapters: "Full Syllabus", questions: 180, time: "3 hours", link: "#" },
+            { id: 'nm4', name: "NEET Biology Focus", chapters: "Biology Intensive", questions: 90, time: "1.5 hours", link: "#" },
+            { id: 'nm5', name: "NEET Physics Focus", chapters: "Physics Intensive", questions: 45, time: "1 hour", link: "#" },
+            { id: 'nm6', name: "NEET Chemistry Focus", chapters: "Chemistry Intensive", questions: 45, time: "1 hour", link: "#" }
+        ]
+    },
+    
+    // Other Exams
+    'kcet': {
+        title: "KCET Mock Tests",
+        description: "Karnataka CET mock tests with state syllabus focus",
+        tests: [
+            { id: 'kc1', name: "KCET Mock Test 1", chapters: "Full Syllabus", questions: 180, time: "2.5 hours", link: "#" },
+            { id: 'kc2', name: "KCET Mock Test 2", chapters: "Full Syllabus", questions: 180, time: "2.5 hours", link: "#" },
+            { id: 'kc3', name: "KCET Physics Focus", chapters: "Physics Only", questions: 60, time: "1 hour", link: "#" },
+            { id: 'kc4', name: "KCET Chemistry Focus", chapters: "Chemistry Only", questions: 60, time: "1 hour", link: "#" },
+            { id: 'kc5', name: "KCET Math Focus", chapters: "Math Only", questions: 60, time: "1 hour", link: "#" }
+        ]
+    },
+    'mhtcet': {
+        title: "MHT-CET Mock Tests",
+        description: "Maharashtra CET mock tests with state board syllabus",
+        tests: [
+            { id: 'mh1', name: "MHT-CET Mock Test 1", chapters: "Full Syllabus", questions: 150, time: "3 hours", link: "#" },
+            { id: 'mh2', name: "MHT-CET Mock Test 2", chapters: "Full Syllabus", questions: 150, time: "3 hours", link: "#" },
+            { id: 'mh3', name: "MHT-CET Physics Focus", chapters: "Physics Only", questions: 50, time: "1 hour", link: "#" },
+            { id: 'mh4', name: "MHT-CET Chemistry Focus", chapters: "Chemistry Only", questions: 50, time: "1 hour", link: "#" }
+        ]
+    },
+    'wbjee': {
+        title: "WBJEE Mock Tests",
+        description: "West Bengal JEE mock tests with state pattern",
+        tests: [
+            { id: 'wb1', name: "WBJEE Mock Test 1", chapters: "Full Syllabus", questions: 75, time: "2 hours", link: "#" },
+            { id: 'wb2', name: "WBJEE Mock Test 2", chapters: "Full Syllabus", questions: 75, time: "2 hours", link: "#" }
+        ]
+    },
+    'tseamcet': {
+        title: "TS EAMCET Mock Tests",
+        description: "Telangana EAMCET mock tests with state pattern",
+        tests: [
+            { id: 'ts1', name: "TS EAMCET Mock Test 1", chapters: "Full Syllabus", questions: 160, time: "3 hours", link: "#" },
+            { id: 'ts2', name: "TS EAMCET Mock Test 2", chapters: "Full Syllabus", questions: 160, time: "3 hours", link: "#" }
+        ]
+    },
+    'upsee': {
+        title: "UPSEE Mock Tests",
+        description: "Uttar Pradesh SEE mock tests with state pattern",
+        tests: [
+            { id: 'up1', name: "UPSEE Mock Test 1", chapters: "Full Syllabus", questions: 150, time: "3 hours", link: "#" },
+            { id: 'up2', name: "UPSEE Mock Test 2", chapters: "Full Syllabus", questions: 150, time: "3 hours", link: "#" }
+        ]
+    },
+    
+    // PYQs
+    'jee-past': {
+        title: "JEE Previous Year Papers",
+        description: "Actual JEE question papers from previous years with solutions",
+        tests: [
+            { id: 'jp2022', name: "JEE Mains 2022", chapters: "Full Paper", questions: 90, time: "3 hours", link: "#" },
+            { id: 'jp2021', name: "JEE Mains 2021", chapters: "Full Paper", questions: 90, time: "3 hours", link: "#" },
+            { id: 'jp2020', name: "JEE Mains 2020", chapters: "Full Paper", questions: 90, time: "3 hours", link: "#" },
+            { id: 'jpa2022', name: "JEE Advanced 2022", chapters: "Full Paper", questions: 54, time: "3 hours", link: "#" },
+            { id: 'jpa2021', name: "JEE Advanced 2021", chapters: "Full Paper", questions: 54, time: "3 hours", link: "#" }
+        ]
+    },
+    'neet-past': {
+        title: "NEET Previous Year Papers",
+        description: "Actual NEET question papers from previous years with solutions",
+        tests: [
+            { id: 'np2022', name: "NEET 2022", chapters: "Full Paper", questions: 180, time: "3 hours", link: "#" },
+            { id: 'np2021', name: "NEET 2021", chapters: "Full Paper", questions: 180, time: "3 hours", link: "#" },
+            { id: 'np2020', name: "NEET 2020", chapters: "Full Paper", questions: 180, time: "3 hours", link: "#" },
+            { id: 'np2019', name: "NEET 2019", chapters: "Full Paper", questions: 180, time: "3 hours", link: "#" }
+        ]
+    },
+    'bitsat-past': {
+        title: "BITSAT Previous Year Papers",
+        description: "Actual BITSAT question papers from previous years",
+        tests: [
+            { id: 'bp2021', name: "BITSAT 2021", chapters: "Full Paper", questions: 150, time: "3 hours", link: "#" },
+            { id: 'bp2020', name: "BITSAT 2020", chapters: "Full Paper", questions: 150, time: "3 hours", link: "#" },
+            { id: 'bp2019', name: "BITSAT 2019", chapters: "Full Paper", questions: 150, time: "3 hours", link: "#" }
+        ]
+    },
+    'aiims-past': {
+        title: "AIIMS Previous Year Papers",
+        description: "Actual AIIMS question papers from previous years",
+        tests: [
+            { id: 'ap2020', name: "AIIMS 2020", chapters: "Full Paper", questions: 200, time: "3.5 hours", link: "#" },
+            { id: 'ap2019', name: "AIIMS 2019", chapters: "Full Paper", questions: 200, time: "3.5 hours", link: "#" },
+            { id: 'ap2018', name: "AIIMS 2018", chapters: "Full Paper", questions: 200, time: "3.5 hours", link: "#" }
+        ]
+    }
+};
 
         // Current category
         let currentCategory = 'jee-physics-chapters';
