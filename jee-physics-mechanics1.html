@@ -1014,5 +1014,24 @@
     // Also modify the endTestDueToViolation function to just submit without alert
  
     </script>
+    <script>
+    // Disable right-click context menu
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+
+    // Disable keyboard shortcuts for developer tools
+    document.addEventListener('keydown', function(e) {
+        // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+        if (e.key === 'F12' || 
+            (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+            (e.ctrlKey && e.shiftKey && e.key === 'J') || 
+            (e.ctrlKey && e.key === 'U') ||
+            (e.ctrlKey && e.key === 'u')) {
+            e.preventDefault();
+            alert('Developer tools are disabled for this test.');
+        }
+    });
+</script>
 </body>
 </html>
