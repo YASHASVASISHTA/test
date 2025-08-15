@@ -717,7 +717,8 @@
         });
 
         // Beforeunload event (for page refresh/close)
-     
+     let startTime = null;
+
 
         function checkFullscreen() {
             if (testStarted && !document.fullscreenElement && !document.webkitFullscreenElement && 
@@ -728,6 +729,9 @@
 
 
         function startTest() {
+
+
+   startTime = new Date();
             // Request fullscreen
             if (document.documentElement.requestFullscreen) {
                 document.documentElement.requestFullscreen();
@@ -956,7 +960,11 @@
 
      function submitTest() {
     clearInterval(timerInterval);
-    
+
+            
+    // Calculate duration
+    const endTime = new Date();
+    const durationInSeconds = Math.floor((endTime - startTime) / 1000);
     // Calculate score
     let score = 0;
     let correct = 0;
@@ -998,6 +1006,7 @@
         answers: userAnswers,
         questions: questions,
         timestamp: new Date().toISOString()
+        duration: durationInSeconds
     };
     
     localStorage.setItem('testResult', JSON.stringify(result));
