@@ -9,126 +9,67 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f5f7fa;
             min-height: 100vh;
-        }
-
-        .header {
-            background: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-menu a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-menu a:hover {
-            color: #667eea;
+            padding: 20px;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
             margin: 0 auto;
-            padding: 2rem 20px;
         }
 
-        .results-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .header {
+            background: #667eea;
             color: white;
-            padding: 3rem;
-            border-radius: 20px;
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .results-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .test-info {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 1rem;
-        }
-
-        .info-item {
+            padding: 1.5rem;
             text-align: center;
         }
 
-        .info-label {
-            font-size: 0.9rem;
-            opacity: 0.8;
+        .header h1 {
+            font-size: 1.8rem;
             margin-bottom: 0.5rem;
         }
 
-        .info-value {
-            font-size: 1.2rem;
-            font-weight: bold;
+        .content {
+            padding: 2rem;
         }
 
         .results-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .result-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
             text-align: center;
         }
 
-        .result-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
         .result-card h3 {
+            margin-bottom: 0.5rem;
             color: #333;
-            margin-bottom: 1rem;
         }
 
         .result-value {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: bold;
-            margin-bottom: 0.5rem;
+        }
+
+        .score .result-value {
+            color: #667eea;
         }
 
         .correct .result-value {
@@ -141,10 +82,6 @@
 
         .unattempted .result-value {
             color: #f39c12;
-        }
-
-        .score .result-value {
-            color: #667eea;
         }
 
         .percentage-circle {
@@ -175,22 +112,92 @@
             z-index: 1;
         }
 
-        .action-buttons {
+        .test-info {
             display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-bottom: 3rem;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 8px;
+        }
+
+        .test-info-item {
+            text-align: center;
+        }
+
+        .test-info-item .label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .test-info-item .value {
+            font-weight: bold;
+        }
+
+        .questions-section {
+            margin-top: 2rem;
+        }
+
+        .questions-section h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .question-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .answer-status {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .correct-answer {
+            background: #e8f8f0;
+            color: #27ae60;
+        }
+
+        .wrong-answer {
+            background: #fdecea;
+            color: #e74c3c;
+        }
+
+        .unattempted-answer {
+            background: #fef5e7;
+            color: #f39c12;
+        }
+
+        .user-answer, .correct-option {
+            margin-bottom: 0.3rem;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
         }
 
         .btn {
             padding: 1rem 2rem;
             border: none;
-            border-radius: 10px;
+            border-radius: 5px;
+            font-weight: bold;
             cursor: pointer;
-            font-size: 1rem;
+            transition: all 0.2s ease;
             text-decoration: none;
             display: inline-block;
-            transition: all 0.3s ease;
+            text-align: center;
         }
 
         .btn-primary {
@@ -200,83 +207,32 @@
 
         .btn-primary:hover {
             background: #5a6fd8;
-            transform: translateY(-2px);
         }
 
         .btn-secondary {
-            background: #95a5a6;
-            color: white;
+            background: #f0f0f0;
+            color: #333;
         }
 
         .btn-secondary:hover {
-            background: #7f8c8d;
-            transform: translateY(-2px);
-        }
-
-        .btn-success {
-            background: #27ae60;
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #219a52;
-            transform: translateY(-2px);
-        }
-
-        .detailed-analysis {
-            background: white;
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .detailed-analysis h2 {
-            color: #333;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .subject-breakdown {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .subject-card {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 10px;
-            border-left: 4px solid #667eea;
-        }
-
-        .subject-card h4 {
-            color: #333;
-            margin-bottom: 1rem;
-        }
-
-        .subject-stats {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
+            background: #e0e0e0;
         }
 
         .performance-tips {
             background: #e8f4fd;
-            padding: 2rem;
-            border-radius: 10px;
-            border-left: 4px solid #3498db;
+            padding: 1.5rem;
+            border-radius: 8px;
             margin-top: 2rem;
+            border-left: 4px solid #3498db;
         }
 
-        .performance-tips h4 {
+        .performance-tips h3 {
             color: #2980b9;
             margin-bottom: 1rem;
         }
 
         .performance-tips ul {
             list-style: none;
-            padding-left: 0;
         }
 
         .performance-tips li {
@@ -291,246 +247,158 @@
             left: 0;
         }
 
-        @media (max-width: 768px) {
-            .test-info {
+        @media (max-width: 600px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .buttons {
                 flex-direction: column;
                 gap: 1rem;
             }
             
-            .action-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .results-header h1 {
-                font-size: 2rem;
+            .btn {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <nav class="nav">
-            <div class="logo">EduTest</div>
-            <div class="nav-menu">
-                <a href="home.html">Dashboard</a>
-                <a href="test-selection.html">Take Test</a>
-                <a href="performance.html">Performance</a>
-            </div>
-        </nav>
-    </header>
-
     <div class="container">
-        <div class="results-header">
+        <div class="header">
             <h1 id="testTitle">Test Results</h1>
+        </div>
+        
+        <div class="content">
             <div class="test-info">
-                <div class="info-item">
-                    <div class="info-label">Test Date</div>
-                    <div class="info-value" id="testDate">-</div>
+                <div class="test-info-item">
+                    <div class="label">Test Date</div>
+                    <div class="value" id="testDate">-</div>
                 </div>
-                <div class="info-item">
-                    <div class="info-label">Time Taken</div>
-                    <div class="info-value" id="timeTaken">-</div>
+                <div class="test-info-item">
+                    <div class="label">Time Taken</div>
+                    <div class="value" id="timeTaken">-</div>
                 </div>
-                <div class="info-item">
-                    <div class="info-label">Total Questions</div>
-                    <div class="info-value" id="totalQuestions">-</div>
+                <div class="test-info-item">
+                    <div class="label">Total Questions</div>
+                    <div class="value" id="totalQuestions">-</div>
                 </div>
             </div>
-        </div>
-
-        <div class="results-grid">
-            <div class="result-card score">
-                <div class="result-icon">🏆</div>
-                <h3>Final Score</h3>
-                <div class="result-value" id="finalScore">0/40</div>
-                <p>Out of maximum possible</p>
-            </div>
-
-            <div class="result-card">
-                <div class="percentage-circle" id="percentageCircle">
-                    <div class="percentage-text" id="percentageText">0%</div>
-                </div>
-                <h3>Percentage</h3>
-                <p>Overall performance</p>
-            </div>
-
-            <div class="result-card correct">
-                <div class="result-icon">✅</div>
-                <h3>Correct Answers</h3>
-                <div class="result-value" id="correctAnswers">0</div>
-                <p>Well done!</p>
-            </div>
-
-            <div class="result-card wrong">
-                <div class="result-icon">❌</div>
-                <h3>Wrong Answers</h3>
-                <div class="result-value" id="wrongAnswers">0</div>
-                <p>Need improvement</p>
-            </div>
-
-            <div class="result-card unattempted">
-                <div class="result-icon">⏭️</div>
-                <h3>Unattempted</h3>
-                <div class="result-value" id="unattemptedAnswers">0</div>
-                <p>Questions skipped</p>
-            </div>
-        </div>
-
-        <div class="action-buttons">
-            <button class="btn btn-success" onclick="downloadSolutions()">📄 Download Solutions</button>
-            <a href="test-selection.html" class="btn btn-primary">🔄 Take Another Test</a>
-            <a href="performance.html" class="btn btn-secondary">📊 View All Results</a>
-            <a href="home.html" class="btn btn-secondary">🏠 Back to Dashboard</a>
-        </div>
-
-        <div class="detailed-analysis">
-            <h2>Detailed Analysis</h2>
             
-            <div class="subject-breakdown" id="subjectBreakdown">
-                <!-- Subject-wise breakdown will be loaded here -->
+            <div class="results-grid">
+                <div class="result-card score">
+                    <h3>Final Score</h3>
+                    <div class="result-value" id="finalScore">0/24</div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="percentage-circle" id="percentageCircle">
+                        <div class="percentage-text" id="percentageText">0%</div>
+                    </div>
+                    <h3>Percentage</h3>
+                </div>
+                
+                <div class="result-card correct">
+                    <h3>Correct Answers</h3>
+                    <div class="result-value" id="correctAnswers">0</div>
+                </div>
+                
+                <div class="result-card wrong">
+                    <h3>Wrong Answers</h3>
+                    <div class="result-value" id="wrongAnswers">0</div>
+                </div>
             </div>
-
+            
             <div class="performance-tips">
-                <h4>Performance Tips</h4>
+                <h3>Performance Tips</h3>
                 <ul id="performanceTips">
-                    <!-- Tips will be loaded based on performance -->
+                    <li>Loading tips...</li>
                 </ul>
+            </div>
+            
+            <div class="questions-section">
+                <h2>Question-wise Analysis</h2>
+                <div id="questionsAnalysis">
+                    <!-- Questions will be loaded here -->
+                </div>
+            </div>
+            
+            <div class="buttons">
+                <a href="index.html" class="btn btn-secondary">Back to Home</a>
+                <a href="test-selection.html" class="btn btn-primary">Take Another Test</a>
             </div>
         </div>
     </div>
 
     <script>
-        // Check if user is logged in
-        if (localStorage.getItem('userLoggedIn') !== 'true') {
-            window.location.href = 'login.html';
-        }
-
-        // Load test results
-        function loadResults() {
-            const result = JSON.parse(localStorage.getItem('currentTestResult'));
+        // Load results from localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            const result = JSON.parse(localStorage.getItem('testResult'));
             
             if (!result) {
-                alert('No test results found. Redirecting to dashboard.');
-                window.location.href = 'home.html';
+                alert('No test results found. Redirecting to home page.');
+                window.location.href = 'index.html';
                 return;
             }
+            
+            // Display results
+            displayResults(result);
+            
+            // Remove results from localStorage after displaying
+            localStorage.removeItem('testResult');
+        });
 
-            // Update header information
-            document.getElementById('testTitle').textContent = `${result.testType.toUpperCase()} Mock Test Results`;
-            document.getElementById('testDate').textContent = new Date(result.date).toLocaleDateString();
-            document.getElementById('timeTaken').textContent = result.timeTaken;
-            document.getElementById('totalQuestions').textContent = result.totalQuestions;
-
-            // Update result cards
-            document.getElementById('finalScore').textContent = `${result.score}/${result.maxScore}`;
+        function displayResults(result) {
+            // Calculate percentage
+            const percentage = Math.round((result.score / (result.total * 4)) * 100);
+            
+            // Set header info
+            document.getElementById('testTitle').textContent = result.testTitle + ' - Results';
+            document.getElementById('testDate').textContent = new Date(result.timestamp).toLocaleString();
+            document.getElementById('timeTaken').textContent = '30:00'; // Hardcoded for this example
+            document.getElementById('totalQuestions').textContent = result.total;
+            
+            // Set result cards
+            document.getElementById('finalScore').textContent = `${result.score}/${result.total * 4}`;
             document.getElementById('correctAnswers').textContent = result.correct;
             document.getElementById('wrongAnswers').textContent = result.wrong;
-            document.getElementById('unattemptedAnswers').textContent = result.unattempted;
-
-            // Update percentage circle
-            const percentage = Math.max(0, result.percentage);
+            
+            // Set percentage circle
             document.getElementById('percentageText').textContent = `${percentage}%`;
             const circle = document.getElementById('percentageCircle');
             circle.style.setProperty('--percentage', `${(percentage / 100) * 360}deg`);
-
-            // Load subject breakdown
-            loadSubjectBreakdown(result);
-
+            
             // Load performance tips
             loadPerformanceTips(result);
-        }
-
-        function loadSubjectBreakdown(result) {
-            const subjects = {};
             
-            // Group questions by subject
-            result.questions.forEach((question, index) => {
-                const subject = question.subject;
-                if (!subjects[subject]) {
-                    subjects[subject] = {
-                        total: 0,
-                        correct: 0,
-                        wrong: 0,
-                        unattempted: 0
-                    };
-                }
-                
-                subjects[subject].total++;
-                
-                if (result.answers[index] !== undefined) {
-                    if (result.answers[index] === question.correct) {
-                        subjects[subject].correct++;
-                    } else {
-                        subjects[subject].wrong++;
-                    }
-                } else {
-                    subjects[subject].unattempted++;
-                }
-            });
-
-            // Display subject breakdown
-            const container = document.getElementById('subjectBreakdown');
-            container.innerHTML = '';
-
-            Object.entries(subjects).forEach(([subject, stats]) => {
-                const percentage = Math.round((stats.correct / stats.total) * 100);
-                
-                const subjectCard = document.createElement('div');
-                subjectCard.className = 'subject-card';
-                subjectCard.innerHTML = `
-                    <h4>${subject}</h4>
-                    <div class="subject-stats">
-                        <span>Correct:</span>
-                        <span style="color: #27ae60; font-weight: bold;">${stats.correct}/${stats.total}</span>
-                    </div>
-                    <div class="subject-stats">
-                        <span>Wrong:</span>
-                        <span style="color: #e74c3c; font-weight: bold;">${stats.wrong}</span>
-                    </div>
-                    <div class="subject-stats">
-                        <span>Unattempted:</span>
-                        <span style="color: #f39c12; font-weight: bold;">${stats.unattempted}</span>
-                    </div>
-                    <div class="subject-stats">
-                        <span>Accuracy:</span>
-                        <span style="color: #667eea; font-weight: bold;">${percentage}%</span>
-                    </div>
-                `;
-                
-                container.appendChild(subjectCard);
-            });
+            // Load question analysis
+            loadQuestionAnalysis(result);
         }
 
         function loadPerformanceTips(result) {
             const tips = [];
-            const percentage = result.percentage;
+            const percentage = Math.round((result.score / (result.total * 4)) * 100);
 
             if (percentage >= 80) {
                 tips.push("Excellent performance! Keep up the great work.");
-                tips.push("Focus on maintaining consistency in all subjects.");
-                tips.push("Consider taking more challenging practice tests.");
+                tips.push("Focus on maintaining consistency in all topics.");
             } else if (percentage >= 60) {
                 tips.push("Good performance! There's room for improvement.");
                 tips.push("Review the topics where you made mistakes.");
-                tips.push("Practice more questions in weaker subjects.");
             } else if (percentage >= 40) {
                 tips.push("Average performance. Focus on building strong fundamentals.");
-                tips.push("Spend more time on concept clarity before attempting questions.");
-                tips.push("Create a structured study plan for consistent improvement.");
+                tips.push("Spend more time on concept clarity.");
             } else {
                 tips.push("Need significant improvement. Don't get discouraged!");
                 tips.push("Start with basic concepts and gradually build up difficulty.");
-                tips.push("Consider seeking help from teachers or mentors.");
-                tips.push("Practice regularly and track your progress.");
             }
 
             if (result.wrong > result.correct) {
                 tips.push("Work on accuracy - avoid negative marking by being more careful.");
             }
 
-            if (result.unattempted > 2) {
-                tips.push("Try to attempt more questions - manage your time better.");
+            if (result.unattempted > 0) {
+                tips.push("Try to attempt all questions - manage your time better.");
             }
 
             // Display tips
@@ -544,51 +412,48 @@
             });
         }
 
-        function downloadSolutions() {
-            const result = JSON.parse(localStorage.getItem('currentTestResult'));
+        function loadQuestionAnalysis(result) {
+            const container = document.getElementById('questionsAnalysis');
+            container.innerHTML = '';
             
-            if (!result) {
-                alert('No test results found.');
-                return;
-            }
-
-            // Create solutions content
-            let solutionsContent = `${result.testType.toUpperCase()} Mock Test Solutions\n`;
-            solutionsContent += `Date: ${new Date(result.date).toLocaleDateString()}\n`;
-            solutionsContent += `Score: ${result.score}/${result.maxScore} (${result.percentage}%)\n\n`;
-
             result.questions.forEach((question, index) => {
                 const userAnswer = result.answers[index];
-                const correctAnswer = question.correct;
-                const isCorrect = userAnswer === correctAnswer;
+                const isCorrect = userAnswer === question.correct;
+                const isAttempted = userAnswer !== null;
                 
-                solutionsContent += `Question ${index + 1}: ${question.question}\n`;
-                solutionsContent += `Options:\n`;
-                question.options.forEach((option, optIndex) => {
-                    const marker = optIndex === correctAnswer ? '✓' : ' ';
-                    solutionsContent += `  ${marker} ${String.fromCharCode(65 + optIndex)}. ${option}\n`;
-                });
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-item';
                 
-                solutionsContent += `Your Answer: ${userAnswer !== undefined ? String.fromCharCode(65 + userAnswer) : 'Not Attempted'}\n`;
-                solutionsContent += `Correct Answer: ${String.fromCharCode(65 + correctAnswer)}\n`;
-                solutionsContent += `Result: ${isCorrect ? 'Correct ✓' : userAnswer !== undefined ? 'Wrong ✗' : 'Not Attempted'}\n`;
-                solutionsContent += `Subject: ${question.subject}\n\n`;
+                let statusClass, statusText;
+                if (!isAttempted) {
+                    statusClass = 'unattempted-answer';
+                    statusText = 'Unattempted';
+                } else if (isCorrect) {
+                    statusClass = 'correct-answer';
+                    statusText = 'Correct';
+                } else {
+                    statusClass = 'wrong-answer';
+                    statusText = 'Wrong';
+                }
+                
+                questionDiv.innerHTML = `
+                    <div class="question-text">Question ${index + 1}: ${question.question}</div>
+                    <div class="answer-status ${statusClass}">${statusText}</div>
+                    
+                    ${isAttempted ? 
+                        `<div class="user-answer">Your answer: ${String.fromCharCode(65 + userAnswer)}. ${question.options[userAnswer]}</div>` : 
+                        `<div class="user-answer">You did not attempt this question</div>`
+                    }
+                    
+                    ${!isCorrect || !isAttempted ? 
+                        `<div class="correct-option">Correct answer: ${String.fromCharCode(65 + question.correct)}. ${question.options[question.correct]}</div>` : 
+                        ''
+                    }
+                `;
+                
+                container.appendChild(questionDiv);
             });
-
-            // Create and download file
-            const blob = new Blob([solutionsContent], { type: 'text/plain' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `${result.testType.toUpperCase()}_Solutions_${new Date(result.date).toLocaleDateString().replace(/\//g, '-')}.txt`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
         }
-
-        // Initialize page
-        loadResults();
     </script>
 </body>
 </html>
