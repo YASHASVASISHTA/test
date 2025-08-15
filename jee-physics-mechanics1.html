@@ -118,9 +118,11 @@
             background: #e0e0e0;
         }
 
-        /* Test Page Styles (same as before) */
+        /* Test Page Styles */
         .test-page {
             display: none;
+            width: 100%;
+            height: 100vh;
         }
 
         .nav-panel {
@@ -533,7 +535,7 @@
                 <!-- Question buttons will be added here -->
             </div>
             
-            <button class="submit-btn" onclick="showSubmitModal()">Submit Test</button>
+            <button class="submit-btn" id="submitTestBtn">Submit Test</button>
         </div>
 
         <!-- Main Content -->
@@ -541,7 +543,7 @@
             <div class="question-container">
                 <div class="question-header">
                     <div class="question-number">Question <span id="currentQNum">1</span></div>
-                    <button class="flag-btn" id="flagBtn" onclick="toggleFlag()">🚩 Preview</button>
+                    <button class="flag-btn" id="flagBtn">🚩 Flag</button>
                 </div>
                 
                 <div class="question-text" id="questionText">
@@ -558,8 +560,8 @@
                 <input type="text" class="fill-blank-input" id="fillBlankInput" style="display: none;" placeholder="Type your answer here">
                 
                 <div class="navigation-buttons">
-                    <button class="nav-btn" id="prevBtn" onclick="prevQuestion()" disabled>Previous</button>
-                    <button class="nav-btn" id="nextBtn" onclick="nextQuestion()">Next</button>
+                    <button class="nav-btn" id="prevBtn" disabled>Previous</button>
+                    <button class="nav-btn" id="nextBtn">Next</button>
                 </div>
             </div>
         </div>
@@ -571,8 +573,8 @@
                 <p>Are you sure you want to submit your test? You won't be able to make changes after submission.</p>
                 
                 <div class="modal-buttons">
-                    <button class="modal-btn modal-cancel" onclick="hideSubmitModal()">Cancel</button>
-                    <button class="modal-btn modal-submit" onclick="submitTest()">Submit</button>
+                    <button class="modal-btn modal-cancel" id="modalCancelBtn">Cancel</button>
+                    <button class="modal-btn modal-submit" id="modalSubmitBtn">Submit</button>
                 </div>
             </div>
         </div>
@@ -605,43 +607,6 @@
                 correct: 3,
                 image: null
             },
-           
-      {
-                type: "mcq",
-                question: "A particle moves along a straight line with a constant acceleration of 2 m/s². If its initial velocity is 4 m/s, what will be its velocity after 5 seconds?",
-                options: [
-                    "10 m/s",
-                    "12 m/s",
-                    "14 m/s",
-                    "16 m/s"
-                ],
-                correct: 2,
-                image: null
-            },
-      {
-                type: "mcq",
-                question: "A particle moves along a straight line with a constant acceleration of 2 m/s². If its initial velocity is 4 m/s, what will be its velocity after 5 seconds?",
-                options: [
-                    "10 m/s",
-                    "12 m/s",
-                    "14 m/s",
-                    "16 m/s"
-                ],
-                correct: 2,
-                image: null
-            },
-      {
-                type: "mcq",
-                question: "A particle moves along a straight line with a constant acceleration of 2 m/s². If its initial velocity is 4 m/s, what will be its velocity after 5 seconds?",
-                options: [
-                    "10 m/s",
-                    "12 m/s",
-                    "14 m/s",
-                    "16 m/s"
-                ],
-                correct: 2,
-                image: null
-            },
             {
                 type: "mcq",
                 question: "A ball is thrown vertically upwards with a velocity of 20 m/s. How high will it go? (Take g = 10 m/s²)",
@@ -666,7 +631,30 @@
                 correct: 2,
                 image: null
             },
-          
+            {
+                type: "mcq",
+                question: "A block of mass 2 kg is pulled with a force of 10 N. If the coefficient of friction is 0.2, what is the acceleration of the block? (g = 10 m/s²)",
+                options: [
+                    "1 m/s²",
+                    "2 m/s²",
+                    "3 m/s²",
+                    "4 m/s²"
+                ],
+                correct: 2,
+                image: null
+            },
+            {
+                type: "mcq",
+                question: "The moment of inertia of a solid sphere about its diameter is:",
+                options: [
+                    "2/5 MR²",
+                    "2/3 MR²",
+                    "1/2 MR²",
+                    "MR²"
+                ],
+                correct: 0,
+                image: null
+            }
         ];
 
         // Global variables
@@ -678,6 +666,7 @@
         let timerInterval;
         let testTitle = "JEE Physics - Mechanics Test";
         let testStarted = false;
+        let startTime = null;
 
         // DOM elements
         const rulesPage = document.getElementById('rulesPage');
@@ -694,31 +683,40 @@
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         const navTimer = document.getElementById('navTimer');
-        const mainContent = document.getElementById('mainContent');
+        const submitTestBtn = document.getElementById('submitTestBtn');
         const submitModal = document.getElementById('submitModal');
+        const modalCancelBtn = document.getElementById('modalCancelBtn');
+        const modalSubmitBtn = document.getElementById('modalSubmitBtn');
 
-        // Event listeners
-        startTestBtn.addEventListener('click', startTest);
-        cancelBtn.addEventListener('click', () => {
-            window.location.href = 'index.html'; // Change to your home page
-        });
+        // Initialize the app
+        function init() {
+            // Event listeners
+            startTestBtn.addEventListener('click', startTest);
+            cancelBtn.addEventListener('click', () => {
+                window.location.href = 'index.html'; // Change to your home page
+            });
+            
+            submitTestBtn.addEventListener('click', showSubmitModal);
+            modalCancelBtn.addEventListener('click', hideSubmitModal);
+            modalSubmitBtn.addEventListener('click', submitTest);
+            
+            prevBtn.addEventListener('click', prevQuestion);
+            nextBtn.addEventListener('click', nextQuestion);
+            flagBtn.addEventListener('click', toggleFlag);
+            
+            // Fullscreen change event
+            document.addEventListener('fullscreenchange', checkFullscreen);
+            document.addEventListener('webkitfullscreenchange', checkFullscreen);
+            document.addEventListener('mozfullscreenchange', checkFullscreen);
+            document.addEventListener('MSFullscreenChange', checkFullscreen);
 
-        // Fullscreen change event
-        document.addEventListener('fullscreenchange', checkFullscreen);
-        document.addEventListener('webkitfullscreenchange', checkFullscreen);
-        document.addEventListener('mozfullscreenchange', checkFullscreen);
-        document.addEventListener('MSFullscreenChange', checkFullscreen);
-
-        // Visibility change event (for tab switching)
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden && testStarted) {
-                endTestDueToViolation("Test ended because you switched tabs");
-            }
-        });
-
-        // Beforeunload event (for page refresh/close)
-     let startTime = null;
-
+            // Visibility change event (for tab switching)
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden && testStarted) {
+                    endTestDueToViolation("Test ended because you switched tabs");
+                }
+            });
+        }
 
         function checkFullscreen() {
             if (testStarted && !document.fullscreenElement && !document.webkitFullscreenElement && 
@@ -727,22 +725,15 @@
             }
         }
 
-
         function startTest() {
-
-
-   startTime = new Date();
+            startTime = new Date();
+            
             // Request fullscreen
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
-            } else if (document.documentElement.webkitRequestFullscreen) {
-                document.documentElement.webkitRequestFullscreen();
-            } else if (document.documentElement.mozRequestFullScreen) {
-                document.documentElement.mozRequestFullScreen();
-            } else if (document.documentElement.msRequestFullscreen) {
-                document.documentElement.msRequestFullscreen();
-            }
-
+            const fullscreenPromise = document.documentElement.requestFullscreen?.() || 
+                                    document.documentElement.webkitRequestFullscreen?.() || 
+                                    document.documentElement.mozRequestFullScreen?.() || 
+                                    document.documentElement.msRequestFullscreen?.();
+            
             // Switch to test page
             rulesPage.style.display = 'none';
             testPage.style.display = 'flex';
@@ -751,10 +742,19 @@
             // Initialize test
             questions = testQuestions;
             initializeTest();
+            
+            // Handle fullscreen errors
+            if (fullscreenPromise) {
+                fullscreenPromise.catch(err => {
+                    console.log("Fullscreen error:", err);
+                    // Still continue with the test even if fullscreen fails
+                });
+            }
         }
 
         function initializeTest() {
             // Create question navigation buttons
+            questionGrid.innerHTML = '';
             questions.forEach((_, index) => {
                 const btn = document.createElement('button');
                 btn.className = 'question-btn';
@@ -764,10 +764,14 @@
             });
 
             // Initialize user answers
+            userAnswers = {};
             questions.forEach((_, index) => {
                 userAnswers[index] = null;
             });
 
+            // Clear flagged questions
+            flaggedQuestions = new Set();
+            
             // Start timer
             startTimer();
             
@@ -838,7 +842,6 @@
             updateQuestionGrid();
         }
 
-     
         function loadMCQQuestion(question) {
             optionsContainer.style.display = 'grid';
             fillBlankInput.style.display = 'none';
@@ -904,7 +907,7 @@
                 flagBtn.textContent = '🚩 Flagged';
             } else {
                 flagBtn.classList.remove('flagged');
-                flagBtn.textContent = '🚩 Preview';
+                flagBtn.textContent = '🚩 Flag';
             }
         }
 
@@ -958,87 +961,84 @@
             submitModal.style.display = 'none';
         }
 
-     function submitTest() {
-    clearInterval(timerInterval);
-
+        function submitTest() {
+            clearInterval(timerInterval);
             
-    // Calculate duration
-    const endTime = new Date();
-    const durationInSeconds = Math.floor((endTime - startTime) / 1000);
-    // Calculate score
-    let score = 0;
-    let correct = 0;
-    let wrong = 0;
-    let unattempted = 0;
-    
-    questions.forEach((question, index) => {
-        if (userAnswers[index] !== null) {
-            if (question.type === 'mcq') {
-                if (userAnswers[index] === question.correct) {
-                    correct++;
-                    score += 4;
+            // Calculate duration
+            const endTime = new Date();
+            const durationInSeconds = Math.floor((endTime - startTime) / 1000);
+            
+            // Calculate score
+            let score = 0;
+            let correct = 0;
+            let wrong = 0;
+            let unattempted = 0;
+            
+            questions.forEach((question, index) => {
+                if (userAnswers[index] !== null) {
+                    if (question.type === 'mcq') {
+                        if (userAnswers[index] === question.correct) {
+                            correct++;
+                            score += 4;
+                        } else {
+                            wrong++;
+                            score -= 1;
+                        }
+                    } else if (question.type === 'fillblank') {
+                        // For fill in the blank questions, we would compare the answer
+                        // (not implemented in this example)
+                    }
                 } else {
-                    wrong++;
-                    score -= 1;
+                    unattempted++;
                 }
-            } else if (question.type === 'fillblank') {
-                if (userAnswers[index].toLowerCase() === question.answer.toLowerCase()) {
-                    correct++;
-                    score += 4;
-                } else {
-                    wrong++;
-                    score -= 1;
-                }
-            }
-        } else {
-            unattempted++;
+            });
+            
+            // Save results
+            const result = {
+                testTitle: testTitle,
+                score: score,
+                correct: correct,
+                wrong: wrong,
+                unattempted: unattempted,
+                total: questions.length,
+                answers: userAnswers,
+                questions: questions,
+                timestamp: new Date().toISOString(),
+                duration: durationInSeconds
+            };
+            
+            localStorage.setItem('testResult', JSON.stringify(result));
+            
+            // Redirect to results page
+            window.location.href = 'results.html';
         }
-    });
-    
-    // Save results
-    const result = {
-        testTitle: testTitle,
-        score: score,
-        correct: correct,
-        wrong: wrong,
-        unattempted: unattempted,
-        total: questions.length,
-        answers: userAnswers,
-        questions: questions,
-        timestamp: new Date().toISOString()
-        duration: durationInSeconds
-    };
-    
-    localStorage.setItem('testResult', JSON.stringify(result));
-    
-    // Remove any beforeunload event listeners that might trigger the warning
-    window.onbeforeunload = null;
-    
-    // Use replace instead of href to prevent the warning
-    window.location.replace('results.html');
-}
 
-    // Also modify the endTestDueToViolation function to just submit without alert
- 
-    </script>
-    <script>
-    // Disable right-click context menu
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-    });
+        function endTestDueToViolation(message) {
+            clearInterval(timerInterval);
+            alert(message);
+            submitTest();
+        }
 
-    // Disable keyboard shortcuts for developer tools
-    document.addEventListener('keydown', function(e) {
-        // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
-        if (e.key === 'F12' || 
-            (e.ctrlKey && e.shiftKey && e.key === 'I') || 
-            (e.ctrlKey && e.shiftKey && e.key === 'J') || 
-            (e.ctrlKey && e.key === 'U') ||
-            (e.ctrlKey && e.key === 'u')) {
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+
+        // Disable right-click context menu
+        document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
-            alert('Developer tools are disabled for this test.');
-        }
-    });
-</script>
+        });
+
+        // Disable keyboard shortcuts for developer tools
+        document.addEventListener('keydown', function(e) {
+            // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+                (e.ctrlKey && e.shiftKey && e.key === 'J') || 
+                (e.ctrlKey && e.key === 'U') ||
+                (e.ctrlKey && e.key === 'u')) {
+                e.preventDefault();
+                alert('Developer tools are disabled for this test.');
+            }
+        });
+    </script>
 </body>
 </html>
