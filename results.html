@@ -373,40 +373,33 @@
     // Rest of your existing functions...
 
 
-function displayResults(result) {
-    // Calculate percentage
-    const percentage = Math.round((result.score / (result.total * 4)) * 100);
-    
-    // Calculate time taken if duration exists in results
-    let timeTakenDisplay = 'N/A';
-    if (result.duration) {
-        const minutes = Math.floor(result.duration / 60);
-        const seconds = result.duration % 60;
-        timeTakenDisplay = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    }
-    
-    // Set header info
-    document.getElementById('testTitle').textContent = result.testTitle + ' - Results';
-    document.getElementById('testDate').textContent = new Date(result.timestamp).toLocaleString();
-    document.getElementById('timeTaken').textContent = timeTakenDisplay; // Updated this line
-    document.getElementById('totalQuestions').textContent = result.total;
-    
-    // Set result cards
-    document.getElementById('finalScore').textContent = `${result.score}/${result.total * 4}`;
-    document.getElementById('correctAnswers').textContent = result.correct;
-    document.getElementById('wrongAnswers').textContent = result.wrong;
-    
-    // Set percentage circle
-    document.getElementById('percentageText').textContent = `${percentage}%`;
-    const circle = document.getElementById('percentageCircle');
-    circle.style.setProperty('--percentage', `${(percentage / 100) * 360}deg`);
-    
-    // Load performance tips
-    loadPerformanceTips(result);
-    
-    // Load question analysis
-    loadQuestionAnalysis(result);
-}
+        function displayResults(result) {
+            // Calculate percentage
+            const percentage = Math.round((result.score / (result.total * 4)) * 100);
+            
+            // Set header info
+            document.getElementById('testTitle').textContent = result.testTitle + ' - Results';
+            document.getElementById('testDate').textContent = new Date(result.timestamp).toLocaleString();
+            document.getElementById('timeTaken').textContent = '30:00'; // Hardcoded for this example
+            document.getElementById('totalQuestions').textContent = result.total;
+            
+            // Set result cards
+            document.getElementById('finalScore').textContent = `${result.score}/${result.total * 4}`;
+            document.getElementById('correctAnswers').textContent = result.correct;
+            document.getElementById('wrongAnswers').textContent = result.wrong;
+            
+            // Set percentage circle
+            document.getElementById('percentageText').textContent = `${percentage}%`;
+            const circle = document.getElementById('percentageCircle');
+            circle.style.setProperty('--percentage', `${(percentage / 100) * 360}deg`);
+            
+            // Load performance tips
+            loadPerformanceTips(result);
+            
+            // Load question analysis
+            loadQuestionAnalysis(result);
+        }
+
         function loadPerformanceTips(result) {
             const tips = [];
             const percentage = Math.round((result.score / (result.total * 4)) * 100);
